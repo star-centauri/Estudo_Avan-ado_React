@@ -11,8 +11,12 @@ class App extends Component {
   }
 
   componentWillMount() {
-    fetch('http://localhost:8080/api/autores')
-    .then(response => this.state = {lista: response.json()});
+    fetch(
+      'http://cdc-react.herokuapp.com/api/autores', 
+      {
+        method: "POST"
+      })
+    .then(response => this.setState({lista: response.json()}));
   }
 
   render() {
