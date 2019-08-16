@@ -10,13 +10,21 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch(
       'http://cdc-react.herokuapp.com/api/autores', 
       {
         method: "POST"
       })
     .then(response => this.setState({lista: response.json()}));
+  }
+
+  enviaForm(event) {
+    event.preventDefault();
+    fetch('http//localhost:8080/api/autores',
+    {
+      method: "POST"
+    });
   }
 
   render() {
@@ -45,7 +53,7 @@ class App extends Component {
           
           <div className="content" id="content">
             <div className="pure-form pure-form-aligned">
-              <form className="pure-form pure-form-aligned">
+              <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
                 <div className="pure-control-group">
                   <label htmlFor="nome">Nome</label> 
                   <input id="nome" type="text" name="nome" value=""  />                  
@@ -75,7 +83,7 @@ class App extends Component {
                 </thead>
                 <tbody>
                   {this.state.lista.map(autor => 
-                    (<tr>
+                    (<tr key={autor.id}>
                       <td>{autor.nome}</td>
                       <td>{autor.email}</td>
                     </tr>))
